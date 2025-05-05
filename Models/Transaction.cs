@@ -1,14 +1,34 @@
-﻿namespace Personal_Finance_Manager.Models
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
+namespace Personal_Finance_Manager.Models;
+
+[Table("Transaction")]
+public partial class Transaction
 {
-    public class Transaction
-    {
-        public int TransactionId { get; set; }
-        public decimal Amount { get; set; }
-        public DateTime? Date { get; set; } = default(DateTime?);
-        public string Category { get; set; }
-        public string Type { get; set; }
-        public string Notes { get; set; }
-        public int UserId { get; set; }
-        public User User { get; set; }
-    }
+    [Key]
+    public int TransactionId { get; set; }
+
+    [Column(TypeName = "decimal(18, 2)")]
+    public decimal Amount { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? Date { get; set; }
+
+    [StringLength(100)]
+    public string? Category { get; set; }
+
+    [StringLength(50)]
+    public string? Type { get; set; }
+
+    public string? Notes { get; set; }
+
+    public int UserId { get; set; }
+
+    [ForeignKey("UserId")]
+    [InverseProperty("Transactions")]
+    public virtual User User { get; set; } = null!;
 }

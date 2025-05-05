@@ -1,83 +1,74 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Personal_Finance_Manager.Models;
 
 namespace Personal_Finance_Manager.Controllers
 {
     public class UserController : Controller
     {
-        // GET: UserController
-        public ActionResult Index()
+
+        private readonly AppDbContext _context;
+
+        public UserController(AppDbContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet]
+        public IActionResult Register()
         {
             return View();
         }
 
-        // GET: UserController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: UserController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: UserController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Register(User user)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            if (!ModelState.IsValid)
+                return View(user);
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            return RedirectToAction("Login", "Home");
         }
 
-        // GET: UserController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Details(int id)
         {
-            return View();
+            var user = _context.Users.Find(id);
+            return user == null ? NotFound() : View(user);
         }
 
-        // POST: UserController/Edit/5
+        public IActionResult Edit(int id)
+        {
+            var user = _context.Users.Find(id);
+            return user == null ? NotFound() : View(user);
+        }
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Edit(User user)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            if (!ModelState.IsValid)
+                return View(user);
+
+            _context.Users.Update(user);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
-        // GET: UserController/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
-            return View();
+            var user = _context.Users.Find(id);
+            return user == null ? NotFound() : View(user);
         }
 
-        // POST: UserController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var user = _context.Users.Find(id);
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
+

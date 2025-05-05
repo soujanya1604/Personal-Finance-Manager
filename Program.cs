@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Personal_Finance_Manager.Models;
+
 namespace Personal_Finance_Manager
 {
     public class Program
@@ -8,6 +11,8 @@ namespace Personal_Finance_Manager
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 

@@ -8,20 +8,33 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Personal_Finance_Manager.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-
-        html {
+        html, body {
+            height: 100%;
             margin: 0;
             padding: 0;
         }
 
         body {
-            margin: 0;
-            padding: 0;
+            display: flex;
+            flex-direction: column;
             background-image: url('/images/background.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: scroll;
+        }
+
+        main {
+            flex: 1 0 auto; 
+        }
+
+        footer {
+            flex-shrink: 0;
+            padding: 20px 0;
+            font-size: 1.1rem;
+            background-color: rgba(0, 0, 0, 0.8); 
+            color: floralwhite;
         }
 
         @@media (max-width: 768px) {
@@ -39,23 +52,27 @@
             }
         }
     </style>
+
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Finance Manager</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item">
+                            <a class="nav-link ms-3" asp-controller="Home" asp-action="Login" title="Sign In">
+                                <i class="bi bi-person-circle fs-4"></i>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -68,7 +85,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer mt-auto">
         <div class="container">
             &copy; 2025 - Personal_Finance_Manager - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
