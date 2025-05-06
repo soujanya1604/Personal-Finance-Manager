@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Stock Quote";
+}
+
+<div class="container mt-5">
+    <h2>Stock Quote</h2>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">@ViewBag.Symbol - Stock Quote</h4>
+            <p><strong>Current Price:</strong> @ViewBag.Price</p>
+            <p><strong>Latest Trading Day:</strong> @ViewBag.Date</p>
+        </div>
+    </div>
+    <a asp-action="Index" class="btn btn-primary mt-3">Back to Dashboard</a>
+</div>

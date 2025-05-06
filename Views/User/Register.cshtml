@@ -1,0 +1,92 @@
+﻿@model Personal_Finance_Manager.Models.User
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    .register-container {
+        min-height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .register-card {
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        width: 100%;
+        max-width: 450px;
+    }
+
+        .register-card h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+    .form-control {
+        border-radius: 0.5rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+        border-radius: 0.5rem;
+    }
+
+    .text-muted a {
+        text-decoration: none;
+    }
+</style>
+
+<div class="register-container">
+    <div class="register-card">
+        <h2>Create an Account</h2>
+
+        <form asp-action="Register">
+            <div asp-validation-summary="ModelOnly" class="text-danger text-center mb-2"></div>
+
+            <div class="mb-3">
+                <label asp-for="FirstName" class="form-label">First Name</label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="LastName" class="form-label">Last Name</label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">Email</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Password</label>
+                <input type="password" asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+
+        <div class="text-center mt-3 text-muted">
+            Already have an account? <a asp-controller="Home" asp-action="Login">Log in</a><br />
+            <a asp-action="Index">← Back to User List</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

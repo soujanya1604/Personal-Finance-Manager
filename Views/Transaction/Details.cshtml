@@ -1,0 +1,19 @@
+﻿@model Personal_Finance_Manager.Models.Transaction
+@{
+    ViewData["Title"] = "Transaction Details";
+}
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Transaction Details</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Category:</strong> @Model.Category</p>
+            <p><strong>Type:</strong> @Model.Type</p>
+            <p><strong>Amount:</strong> @Model.Amount.ToString("C")</p>
+            <p><strong>Date:</strong> @Model.Date?.ToShortDateString()</p>
+            <p><strong>Notes:</strong> @Model.Notes</p>
+            <a asp-action="Index" class="btn btn-outline-primary mt-3">⬅ Back to Transactions</a>
+        </div>
+    </div>
+</div>

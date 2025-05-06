@@ -1,83 +1,64 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Personal_Finance_Manager.Models;
 
-namespace Personal_Finance_Manager.Controllers
+public class TransactionController : Controller
 {
-    public class TransactionController : Controller
+    private readonly AppDbContext _context;
+    public TransactionController(AppDbContext context) => _context = context;
+
+    public IActionResult Index()
     {
-        // GET: Transaction
-        public ActionResult Index()
-        {
-            return View();
-        }
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        var transactions = _context.Transactions.Where(t => t.UserId == userId).ToList();
+        return View(transactions);
+    }
 
-        // GET: Transaction/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+    public IActionResult Create()
+    {
+        return View();
+    }
 
-        // GET: Transaction/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+    [HttpPost]
+    public IActionResult Create(Transaction tx)
+    {
+        tx.UserId = HttpContext.Session.GetInt32("UserId") ?? 0;
+        tx.Date = DateTime.Now;
+        _context.Transactions.Add(tx);
+        _context.SaveChanges();
+        return RedirectToAction("Index");
+    }
 
-        // POST: Transaction/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+    public IActionResult Edit(int id)
+    {
+        return View(_context.Transactions.Find(id));
+    }
 
-        // GET: Transaction/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+    [HttpPost]
+    public IActionResult Edit(Transaction tx)
+    {
+        _context.Transactions.Update(tx);
+        _context.SaveChanges();
+        return RedirectToAction("Index");
+    }
 
-        // POST: Transaction/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+    public IActionResult Delete(int id)
+    {
+        return View(_context.Transactions.Find(id));
+    }
 
-        // GET: Transaction/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+    [HttpPost, ActionName("Delete")]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        var tx = _context.Transactions.Find(id);
+        _context.Transactions.Remove(tx);
+        _context.SaveChanges();
+        return RedirectToAction("Index");
+    }
 
-        // POST: Transaction/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+    public IActionResult Details(int id)
+    {
+        return View(_context.Transactions.Find(id));
     }
 }
+
