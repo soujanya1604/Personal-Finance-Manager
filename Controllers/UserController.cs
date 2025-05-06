@@ -29,7 +29,7 @@ namespace Personal_Finance_Manager.Controllers
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            return RedirectToAction("Login", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Details(int id)
@@ -51,21 +51,6 @@ namespace Personal_Finance_Manager.Controllers
                 return View(user);
 
             _context.Users.Update(user);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult Delete(int id)
-        {
-            var user = _context.Users.Find(id);
-            return user == null ? NotFound() : View(user);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            var user = _context.Users.Find(id);
-            _context.Users.Remove(user);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

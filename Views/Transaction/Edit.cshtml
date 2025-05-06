@@ -1,0 +1,31 @@
+﻿@model Personal_Finance_Manager.Models.Transaction
+@{
+    ViewData["Title"] = "Edit Transaction";
+}
+<div class="container mt-4">
+    <h2 class="mb-3 text-center">Edit Transaction</h2>
+    <form asp-action="Edit" class="shadow p-4 rounded bg-light">
+        <input type="hidden" asp-for="TransactionId" />
+        <div class="mb-3">
+            <label asp-for="Category" class="form-label"></label>
+            <input asp-for="Category" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Type" class="form-label"></label>
+            <select asp-for="Type" class="form-select">
+                <option>Income</option>
+                <option>Expense</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Amount" class="form-label"></label>
+            <input asp-for="Amount" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Notes" class="form-label"></label>
+            <textarea asp-for="Notes" class="form-control"></textarea>
+        </div>
+        <button type="submit" class="btn btn-warning">Update</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>

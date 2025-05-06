@@ -35,31 +35,67 @@
 </style>
 
 <div class="content-wrapper">
-    <h1 class="center-heading">💰 Finance Tracker</h1>
+    @if (ViewBag.IsLoggedIn == false)
+    {
+        <!-- If the user is not logged in, display this content -->
+        <h1 class="center-heading">💰 Finance Tracker</h1>
 
-    <div class="left-content">
-        <p>
-            This application helps you manage your personal finances by tracking income, expenses, and creating budgets.
-            You can:
-        </p>
+        <div class="left-content">
+            <p>
+                This application helps you manage your personal finances by tracking income, expenses, and creating budgets.
+                You can:
+            </p>
 
-        <ul>
-            <li>Track your income and expenses.</li>
-            <li>View a summary of your financial status.</li>
-            <li>Set up budgets and monitor your spending.</li>
-            <li>Stay on top of your stock investments and watch market trends.</li>
-        </ul>
+            <ul>
+                <li>Track your income and expenses.</li>
+                <li>View a summary of your financial status.</li>
+                <li>Set up budgets and monitor your spending.</li>
+                <li>Stay on top of your stock investments and watch market trends.</li>
+            </ul>
 
-        <p>
-            To access your financial data, please <a href="@Url.Action("Login", "Home")">sign in</a>.
-        </p>
+            <p>
+                To access your financial data, please <a href="@Url.Action("Login", "Home")">sign in</a>.
+            </p>
 
-        <h3>Features</h3>
-        <p>Manage your finances effectively with:</p>
-        <ul>
-            <li>Real-time financial data.</li>
-            <li>Easy-to-use interface for tracking and budgeting.</li>
-            <li>Personalized finance insights based on your spending habits.</li>
-        </ul>
-    </div>
+            <h3>Features</h3>
+            <p>Manage your finances effectively with:</p>
+            <ul>
+                <li>Real-time financial data.</li>
+                <li>Easy-to-use interface for tracking and budgeting.</li>
+                <li>Personalized finance insights based on your spending habits.</li>
+            </ul>
+        </div>
+    }
+    else
+    {
+        <!-- If the user is logged in, show the transactions and stock data -->
+        <h2>Your Transactions</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var transaction in Model)
+                {
+                    <tr>
+                        <td>@transaction.Category</td>
+                        <td>@transaction.Type</td>
+                        <td>@transaction.Amount.ToString("C")</td>
+                        <td>@transaction.Date?.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h3>Stock Information</h3>
+        <div>
+            <p><strong>Stock Price:</strong> @ViewBag.StockData?.Price</p>
+            <p><strong>Latest Trading Date:</strong> @ViewBag.StockData?.Date</p>
+        </div>
+    }
 </div>
